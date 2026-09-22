@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: sandbox-dns
+  namespace: sandbox-system-ns-1
+  labels:
+    app.kubernetes.io/name: sandbox-dns
+    app.kubernetes.io/part-of: outbound-api-sandbox
+spec:
+  type: ClusterIP
+  clusterIP: 10.96.0.53
+  selector:
+    app.kubernetes.io/name: sandbox-dns
+  ports:
+    - name: dns-udp
+      protocol: UDP
+      port: 53
+      targetPort: 53
+    - name: dns-tcp
+      protocol: TCP
+      port: 53
+      targetPort: 53
