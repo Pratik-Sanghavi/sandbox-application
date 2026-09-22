@@ -1,0 +1,14 @@
+apiVersion: admissionregistration.k8s.io/v1
+kind: MutatingAdmissionPolicyBinding
+metadata:
+  name: sandbox-dns-pod-mutation.pratiks.io
+spec:
+  policyName: sandbox-dns-pod-mutation.pratiks.io
+  paramRef:
+    name: sandbox-dns-policy-config
+    namespace: sandbox-system-ns-1
+    parameterNotFoundAction: Deny
+  matchResources:
+    namespaceSelector:
+      matchLabels:
+        sandbox.pratiks.io/enabled: "true"

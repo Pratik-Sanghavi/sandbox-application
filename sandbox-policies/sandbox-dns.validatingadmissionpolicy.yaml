@@ -1,0 +1,26 @@
+apiVersion: admissionregistration.k8s.io/v1
+kind: ValidatingAdmissionPolicy
+metadata:
+  name: sandbox-dns-pod-validation.pratiks.io
+spec:
+  failurePolicy: Fail
+  paramKind:
+    apiVersion: v1
+    kind: ConfigMap
+  matchConstraints:
+    resourceRules:
+      - apiGroups: [""]
+        apiVersions: ["v1"]
+        operations: ["CREATE"]
+        resources: ["pods"]
+  validations:
+    - expression: "!has(object.spec.hostNetwork) || object.spec.hostNetwork == false"
+      message: "Sandboxed Pods cannot use host networking."
+    - expression: "object.spec.dnsPolicy == 'None'"
+      message: "Sandboxed Pods must use dnsPolicy None."
+    - expression: "object.spec.dnsConfig.nameservers.size() == 1 && object.spec.dnsConfig.nameservers[0] == string(params.data['sandboxDnsIP'])"
+      message: "Sandboxed Pods must use the controlled DNS Service IP."
+    - expression: "object.spec.dnsConfig.searches.size() == 3 && object.spec.dnsConfig.searches[0] == request.namespace + '.svc.' + string(params.data['clusterDomain']) && object.spec.dnsConfig.searches[1] == 'svc.' + string(params.data['clusterDomain']) && object.spec.dnsConfig.searches[2] == string(params.data['clusterDomain'])"
+      message: "Sandboxed Pods must use the controlled DNS search domains."
+    - expression: "object.spec.dnsConfig.options.size() == 1 && object.spec.dnsConfig.options[0].name == 'ndots' && object.spec.dnsConfig.options[0].value == '5'"
+      message: "Sandboxed Pods must use the controlled DNS options."

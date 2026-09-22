@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sandbox-dns-policy-config
+  namespace: sandbox-system-ns-1
+data:
+  sandboxDnsIP: 10.96.0.53
+  clusterDomain: cluster.local

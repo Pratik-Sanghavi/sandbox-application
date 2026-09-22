@@ -1,0 +1,15 @@
+apiVersion: admissionregistration.k8s.io/v1
+kind: ValidatingAdmissionPolicyBinding
+metadata:
+  name: sandbox-dns-pod-validation.pratiks.io
+spec:
+  policyName: sandbox-dns-pod-validation.pratiks.io
+  validationActions: [Deny]
+  paramRef:
+    name: sandbox-dns-policy-config
+    namespace: sandbox-system-ns-1
+    parameterNotFoundAction: Deny
+  matchResources:
+    namespaceSelector:
+      matchLabels:
+        sandbox.pratiks.io/enabled: "true"
