@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: sandbox-system-ns-1
+  labels:
+    app.kubernetes.io/part-of: outbound-api-sandbox
+    sandbox.pratiks.io/role: system
