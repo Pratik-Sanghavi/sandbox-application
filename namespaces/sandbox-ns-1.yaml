@@ -4,4 +4,5 @@ metadata:
   name: sandbox-ns-1
   labels:
     app.kubernetes.io/part-of: outbound-api-sandbox
+    sandbox.pratiks.io/enabled: "true"
     sandbox.pratiks.io/role: workload
