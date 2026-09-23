@@ -33,8 +33,6 @@ data:
         prometheus :9153
         log
         cache 30
-        template ANY ANY {
-            rcode REFUSED
-        }
+        forward . 10.96.0.10
         reload
     }
