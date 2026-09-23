@@ -3,5 +3,5 @@ kind: Kustomization
 resources:
   - deployment.yaml
   - service.yaml
-  - transparent-capture-injector-tls.secret.sops.yaml
+  - transparent-capture-injector-tls.secret.yaml
   - mutatingwebhookconfiguration.yaml
