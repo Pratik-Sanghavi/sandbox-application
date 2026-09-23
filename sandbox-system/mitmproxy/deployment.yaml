@@ -30,14 +30,15 @@ spec:
             - |
               set -eu
               cp /ca-source/mitmproxy-ca.pem /home/mitmproxy/.mitmproxy/mitmproxy-ca.pem
-              chown 1000:1000 /home/mitmproxy/.mitmproxy/mitmproxy-ca.pem
               chmod 0400 /home/mitmproxy/.mitmproxy/mitmproxy-ca.pem
           securityContext:
             allowPrivilegeEscalation: false
             capabilities:
               drop: [ALL]
             readOnlyRootFilesystem: true
-            runAsUser: 0
+            runAsNonRoot: true
+            runAsUser: 1000
+            runAsGroup: 1000
             seccompProfile:
               type: RuntimeDefault
           volumeMounts:
