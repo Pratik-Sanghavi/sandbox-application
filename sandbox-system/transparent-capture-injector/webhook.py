@@ -26,7 +26,7 @@ CA_INIT = {
     "command": [
         "sh",
         "-c",
-        "cp /ca/mitmproxy-ca.pem /runtime/mitmproxy-ca.pem && chmod 0400 /runtime/mitmproxy-ca.pem",
+        "cp /ca/mitmproxy-ca.pem /runtime/mitmproxy-ca.pem && chown 1000:1000 /runtime/mitmproxy-ca.pem && chmod 0400 /runtime/mitmproxy-ca.pem",
     ],
     "securityContext": {"runAsUser": 0, "allowPrivilegeEscalation": False},
     "volumeMounts": [
@@ -37,6 +37,7 @@ CA_INIT = {
 PROXY = {
     "name": "sandbox-mitmproxy",
     "image": "localhost:5000/sandbox/transparent-mitmproxy:0.1.0",
+    "readinessProbe": {"tcpSocket": {"port": 8080}},
     "volumeMounts": [
         {"name": "sandbox-mitmproxy-runtime", "mountPath": "/var/run/sandbox-mitmproxy"}
     ],
