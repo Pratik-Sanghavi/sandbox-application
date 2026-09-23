@@ -30,3 +30,26 @@ spec:
               }
             }
           ]
+    - patchType: ApplyConfiguration
+      applyConfiguration:
+        expression: >-
+          Object{
+            spec: Object.spec{
+              volumes: [
+                Object.spec.volumes{
+                  name: "sandbox-ca-trust",
+                  configMap: Object.spec.volumes.configMap{
+                    name: "sandbox-ca-trust",
+                    items: [Object.spec.volumes.configMap.items{key: "ca.crt", path: "ca.crt"}]
+                  }
+                }
+              ],
+              containers: object.spec.containers.map(container,
+                Object.spec.containers{
+                  name: container.name,
+                  env: [Object.spec.containers.env{name: "NODE_EXTRA_CA_CERTS", value: "/var/run/sandbox-ca/ca.crt"}],
+                  volumeMounts: [Object.spec.containers.volumeMounts{name: "sandbox-ca-trust", mountPath: "/var/run/sandbox-ca", readOnly: true}]
+                }
+              )
+            }
+          }

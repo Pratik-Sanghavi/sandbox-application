@@ -4,3 +4,4 @@ resources:
   - sandbox-system-ns-1.yaml
   - sandbox-ns-1.yaml
   - mock-servers-ns-1.yaml
+  - sandbox-ca-trust.configmap.yaml
