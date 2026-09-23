@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: transparent-capture-injector
+  namespace: sandbox-system-ns-1
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: transparent-capture-injector
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: transparent-capture-injector
+    spec:
+      containers:
+        - name: injector
+          image: localhost:5000/sandbox/transparent-capture-injector:0.1.0
+          ports:
+            - name: https
+              containerPort: 8443
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            runAsNonRoot: true
+            runAsUser: 65532
+            capabilities:
+              drop: ["ALL"]
+          readinessProbe:
+            tcpSocket:
+              port: https
+          volumeMounts:
+            - name: tls
+              mountPath: /tls
+              readOnly: true
+      volumes:
+        - name: tls
+          secret:
+            secretName: transparent-capture-injector-tls
