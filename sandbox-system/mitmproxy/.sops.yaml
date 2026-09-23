@@ -1,0 +1,4 @@
+creation_rules:
+  - path_regex: '.*sandbox-ca\.secret(\.sops)?\.ya?ml$'
+    encrypted_regex: '^(data|stringData)$'
+    age: age18ya0vm8csn800a27va3v3ed7shllat7awgmen62jyqtf29n6y4lqx5gfzg
