@@ -40,7 +40,6 @@ spec:
                   name: "sandbox-ca-trust",
                   configMap: Object.spec.volumes.configMap{
                     name: "sandbox-ca-trust",
-                    items: [Object.spec.volumes.configMap.items{key: "ca.crt", path: "ca.crt"}]
                   }
                 }
               ],
