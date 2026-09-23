@@ -26,7 +26,7 @@ CA_INIT = {
     "command": [
         "sh",
         "-c",
-        "cp /ca/mitmproxy-ca.pem /runtime/mitmproxy-ca.pem && chown 1000:1000 /runtime/mitmproxy-ca.pem && chmod 0400 /runtime/mitmproxy-ca.pem",
+        "cat /ca/ca.crt /ca/mitmproxy-ca.pem > /runtime/mitmproxy-ca.pem && chown 1000:1000 /runtime/mitmproxy-ca.pem && chmod 0400 /runtime/mitmproxy-ca.pem",
     ],
     "securityContext": {"runAsUser": 0, "allowPrivilegeEscalation": False},
     "volumeMounts": [
