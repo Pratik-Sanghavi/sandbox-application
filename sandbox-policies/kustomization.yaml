@@ -7,5 +7,3 @@ resources:
   - sandbox-dns.validatingadmissionpolicy.yaml
   - sandbox-dns.validatingadmissionpolicybinding.yaml
 
-  - sandbox-transparent-capture.mutatingadmissionpolicy.yaml
-  - sandbox-transparent-capture.mutatingadmissionpolicybinding.yaml
