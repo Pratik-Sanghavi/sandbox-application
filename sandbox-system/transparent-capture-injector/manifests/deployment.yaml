@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: injector
-          image: localhost:5000/sandbox/transparent-capture-injector:0.1.7
+          image: localhost:5000/sandbox/transparent-capture-injector:0.1.8
           ports:
             - name: https
               containerPort: 8443

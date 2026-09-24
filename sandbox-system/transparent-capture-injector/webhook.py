@@ -17,7 +17,7 @@ CA_VOLUME = {
 }
 IPTABLES_INIT = {
     "name": "sandbox-iptables",
-    "image": "localhost:5000/sandbox/transparent-iptables-init:0.1.0",
+    "image": "localhost:5000/sandbox/transparent-iptables-init:0.1.1",
     "securityContext": {
         "runAsUser": 0,
         "allowPrivilegeEscalation": False,
@@ -26,11 +26,11 @@ IPTABLES_INIT = {
 }
 CA_INIT = {
     "name": "sandbox-install-ca",
-    "image": "localhost:5000/sandbox/transparent-mitmproxy:0.1.4",
+    "image": "localhost:5000/sandbox/transparent-mitmproxy:0.1.5",
     "command": [
         "sh",
         "-c",
-        "cat /ca/ca.crt /ca/mitmproxy-ca.pem > /runtime/mitmproxy-ca.pem && chown 1000:1000 /runtime/mitmproxy-ca.pem && chmod 0400 /runtime/mitmproxy-ca.pem",
+        "cat /ca/ca.crt /ca/mitmproxy-ca.pem > /runtime/mitmproxy-ca.pem && chown 1001:1001 /runtime/mitmproxy-ca.pem && chmod 0400 /runtime/mitmproxy-ca.pem",
     ],
     "securityContext": {"runAsUser": 0, "allowPrivilegeEscalation": False},
     "volumeMounts": [
@@ -40,7 +40,13 @@ CA_INIT = {
 }
 PROXY = {
     "name": "sandbox-mitmproxy",
-    "image": "localhost:5000/sandbox/transparent-mitmproxy:0.1.4",
+    "image": "localhost:5000/sandbox/transparent-mitmproxy:0.1.5",
+    "securityContext": {
+        "runAsUser": 1001,
+        "runAsGroup": 1001,
+        "allowPrivilegeEscalation": False,
+        "capabilities": {"drop": ["ALL"]},
+    },
     "readinessProbe": {"exec": {"command": ["python", "-c", "import socket; s=socket.create_connection((\"127.0.0.1\", 8080), 1); s.close()"]}},
     "volumeMounts": [
         {"name": "sandbox-mitmproxy-runtime", "mountPath": "/var/run/sandbox-mitmproxy"},

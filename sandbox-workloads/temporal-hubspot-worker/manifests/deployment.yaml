@@ -12,6 +12,8 @@ spec:
       app.kubernetes.io/name: temporal-hubspot-worker
   template:
     metadata:
+      annotations:
+        sandbox.pratiks.io/transparent-capture-revision: uid-1001
       labels:
         app.kubernetes.io/name: temporal-hubspot-worker
         app.kubernetes.io/part-of: outbound-api-sandbox
