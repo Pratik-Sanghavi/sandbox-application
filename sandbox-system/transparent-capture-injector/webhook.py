@@ -26,7 +26,7 @@ IPTABLES_INIT = {
 }
 CA_INIT = {
     "name": "sandbox-install-ca",
-    "image": "localhost:5000/sandbox/transparent-mitmproxy:0.1.3",
+    "image": "localhost:5000/sandbox/transparent-mitmproxy:0.1.4",
     "command": [
         "sh",
         "-c",
@@ -40,7 +40,7 @@ CA_INIT = {
 }
 PROXY = {
     "name": "sandbox-mitmproxy",
-    "image": "localhost:5000/sandbox/transparent-mitmproxy:0.1.3",
+    "image": "localhost:5000/sandbox/transparent-mitmproxy:0.1.4",
     "readinessProbe": {"exec": {"command": ["python", "-c", "import socket; s=socket.create_connection((\"127.0.0.1\", 8080), 1); s.close()"]}},
     "volumeMounts": [
         {"name": "sandbox-mitmproxy-runtime", "mountPath": "/var/run/sandbox-mitmproxy"},

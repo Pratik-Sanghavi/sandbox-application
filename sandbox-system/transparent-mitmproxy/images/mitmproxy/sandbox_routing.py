@@ -71,7 +71,6 @@ def _mock_upstream(hostname: str) -> str:
 def _route_to_mock(flow: http.HTTPFlow, hostname: str) -> str:
     """Send a decrypted request to its convention-derived in-cluster mock."""
     upstream = _mock_upstream(hostname)
-    flow.server_conn.address = (upstream, MOCK_PORT)
     flow.request.scheme = "http"
     flow.request.host = upstream
     flow.request.port = MOCK_PORT
