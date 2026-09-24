@@ -7,6 +7,10 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 
 
 RUNTIME_VOLUME = {"name": "sandbox-mitmproxy-runtime", "emptyDir": {}}
+ROUTING_CONFIG_VOLUME = {
+    "name": "sandbox-mock-routing",
+    "configMap": {"name": "sandbox-mock-routing"},
+}
 CA_VOLUME = {
     "name": "sandbox-mitmproxy-ca",
     "secret": {"secretName": "sandbox-mitmproxy-ca"},
@@ -22,7 +26,7 @@ IPTABLES_INIT = {
 }
 CA_INIT = {
     "name": "sandbox-install-ca",
-    "image": "localhost:5000/sandbox/transparent-mitmproxy:0.1.1",
+    "image": "localhost:5000/sandbox/transparent-mitmproxy:0.1.3",
     "command": [
         "sh",
         "-c",
@@ -36,10 +40,11 @@ CA_INIT = {
 }
 PROXY = {
     "name": "sandbox-mitmproxy",
-    "image": "localhost:5000/sandbox/transparent-mitmproxy:0.1.1",
+    "image": "localhost:5000/sandbox/transparent-mitmproxy:0.1.3",
     "readinessProbe": {"exec": {"command": ["python", "-c", "import socket; s=socket.create_connection((\"127.0.0.1\", 8080), 1); s.close()"]}},
     "volumeMounts": [
-        {"name": "sandbox-mitmproxy-runtime", "mountPath": "/var/run/sandbox-mitmproxy"}
+        {"name": "sandbox-mitmproxy-runtime", "mountPath": "/var/run/sandbox-mitmproxy"},
+        {"name": "sandbox-mock-routing", "mountPath": "/etc/sandbox-mock-routing", "readOnly": True}
     ],
 }
 
@@ -57,7 +62,7 @@ def mutation_for(pod):
     if any(container.get("name") == PROXY["name"] for container in containers):
         return []
     patches = []
-    add_array(patches, spec, "volumes", [RUNTIME_VOLUME, CA_VOLUME])
+    add_array(patches, spec, "volumes", [RUNTIME_VOLUME, CA_VOLUME, ROUTING_CONFIG_VOLUME])
     add_array(patches, spec, "initContainers", [IPTABLES_INIT, CA_INIT])
     patches.append({"op": "add", "path": "/spec/containers/-", "value": PROXY})
     return patches
