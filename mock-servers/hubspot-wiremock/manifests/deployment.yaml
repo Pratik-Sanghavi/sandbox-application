@@ -17,6 +17,8 @@ spec:
         app.kubernetes.io/part-of: outbound-api-sandbox
     spec:
       securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
         seccompProfile:
           type: RuntimeDefault
       containers:
@@ -49,7 +51,11 @@ spec:
             - name: mappings
               mountPath: /home/wiremock/mappings
               readOnly: true
+            - name: tmp
+              mountPath: /tmp
       volumes:
         - name: mappings
           configMap:
             name: hubspot-wiremock-mappings
+        - name: tmp
+          emptyDir: {}
