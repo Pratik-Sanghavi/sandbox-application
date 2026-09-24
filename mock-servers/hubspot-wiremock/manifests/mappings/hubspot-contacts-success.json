@@ -1,0 +1,40 @@
+{
+  "priority": 1,
+  "request": {
+    "method": "GET",
+    "urlPath": "/crm/v3/objects/contacts"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "jsonBody": {
+      "results": [
+        {
+          "id": "100000",
+          "properties": {
+            "email": "ravi@pratiks.io",
+            "firstname": "Ravi",
+            "lastname": "Sanghavi"
+          },
+          "createdAt": "2026-09-23T00:00:00Z",
+          "updatedAt": "2026-09-23T00:00:00Z",
+          "archived": false
+        },
+        {
+          "id": "100001",
+          "properties": {
+            "email": "neelam@pratiks.io",
+            "firstname": "Neelam",
+            "lastname": "Shanghavi"
+          },
+          "createdAt": "2026-09-23T00:00:00Z",
+          "updatedAt": "2026-09-23T00:00:00Z",
+          "archived": false
+        }
+      ],
+      "total": 1
+    }
+  }
+}

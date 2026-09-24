@@ -1,0 +1,29 @@
+{
+  "priority": 1,
+  "request": {
+    "method": "POST",
+    "urlPath": "/crm/v3/objects/contacts",
+    "bodyPatterns": [
+      {
+        "matchesJsonPath": "$.properties.email"
+      }
+    ]
+  },
+  "response": {
+    "status": 201,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "jsonBody": {
+      "id": "100002",
+      "properties": {
+        "email": "ankit@pratiks.io",
+        "firstname": "Ankit",
+        "lastname": "Sanghvi"
+      },
+      "createdAt": "2026-09-23T00:00:00Z",
+      "updatedAt": "2026-09-23T00:00:00Z",
+      "archived": false
+    }
+  }
+}
